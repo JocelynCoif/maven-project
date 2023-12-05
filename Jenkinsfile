@@ -17,6 +17,12 @@ pipeline {
         bat 'mvn -B -DskipTests clean package'
       }
     }
+    stage('Build&SendResult') {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarqube')
+                { bat 'mvn clean package sonar:sonar -Dsonar.login=admin -Dsonar.password=Admin'}
+            }
+        }
 
   }
 }
